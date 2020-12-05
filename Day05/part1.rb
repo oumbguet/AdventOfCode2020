@@ -1,6 +1,6 @@
 file = File.open("input")
 arr = file.readlines.map(&:chomp)
-tmp_id = 0
+ids = []
 
 def get_row(line)
     pow = 6
@@ -36,7 +36,7 @@ arr.each {|line|
     row = get_row(line[0...-3])
     col = get_col(line[-3..-1])
     id = row * 8 + col
-    tmp_id = id > tmp_id ? id : tmp_id
+    ids.push(id)
 }
 
-puts tmp_id
+puts ids.max()
