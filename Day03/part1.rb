@@ -1,46 +1,26 @@
-file = File.open("input")
-arr = file.readlines.map(&:chomp)
-valid = 0
-map = []
-bottom_ind = 0
-right_ind = 0
-x = 0
-slope = 3
-count = 0
-result = 1
+file = File.open("input", "r")
+data = file.readlines.map(&:chomp)
 
-arr.each {|line|map.push(line.split(""))}
-bottom_ind = map.length
-right_ind = map[0].length
+right_index = 0
+down_index = 0
 
-for slope in [1, 3, 5, 7]
-    for i in (0...bottom_ind)
-        if (x >= right_ind)
-            x -= right_ind
-        end
-        if (map[i][x] == "#")
-            count += 1
-        end
-        x += slope
+right_slope = 3
+down_slope = 1
+
+trees_count = 0
+
+while true do
+    right_index = (right_index + right_slope) % data[0].length
+    down_index += down_slope
+
+    if down_index >= data.length
+        break
     end
-    puts slope.to_s + " 1 " + count.to_s
-    result *= count
-    count = 0
-    x = 0
+    current = data[down_index][right_index]
+
+    if current == '#'
+        trees_count += 1
+    end
 end
 
-for i in (0...bottom_ind)
-    if i % 2 != 0
-        next
-    end
-    if (x >= right_ind)
-        x -= right_ind
-    end
-    if (map[i][x] == "#")
-        count += 1
-    end
-    x += 1
-end
-puts "1 2 " + count.to_s
-result *= count
-puts result
+puts trees_count
